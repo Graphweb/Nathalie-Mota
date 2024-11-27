@@ -5,3 +5,92 @@ Author: Dominique Pariel
 Description: Nathalie Mota, photographe professionnelle dans l’événementiel
 Version: 1.0
 */
+
+/*********** HEADER **********/
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 80px;
+}
+
+.logo {
+    padding-left: 144px;
+}
+
+.logo img {
+    width: 216px;
+    height: auto;
+}
+
+.menu {
+    padding-left: 899px;
+    margin-top: -30px;
+}
+
+
+.menu-links {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0;
+    padding: 0;
+    gap: 45px;
+}
+.menu-links li {
+    list-style-type: none;
+}
+
+.menu-links li a {
+    text-decoration: none;
+    font-family: "Space Mono", monospace;
+    font-size: 1.125rem;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--full-black);
+    margin-bottom: 0;
+}
+
+
+
+/*********** FOOTER **********/
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 40px;
+    padding: 10px 0;
+    border-top: 1px solid var(--full-black);
+    margin-bottom: 30px;
+}
+
+.footer-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    margin-bottom: 0;
+    padding: 0;
+    gap: 80px;
+}
+
+.footer-links li {
+    list-style-type: none;
+}
+
+.footer-links li a {
+    text-decoration: none;
+    font-family: "Space Mono", monospace;
+    font-size: 1.125rem;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--full-black);
+    margin-bottom: 0;
+}
