@@ -5,7 +5,7 @@ function theme_enqueue_styles() {
 
     //POUR RELIER LE CSS ET JS DU THÈME ENFANT //
     wp_enqueue_style('theme-style', get_stylesheet_directory_uri() . '/style.css', array());
-    wp_enqueue_script('theme-script', get_stylesheet_directory_uri() . '/script.js', array(), false, true);
+    wp_enqueue_script('theme-script', get_stylesheet_directory_uri() . '/js/script.js', array(), false, true);
 }
 
  // Activer le support du logo personnalisé
@@ -21,3 +21,4 @@ register_nav_menus(array(
     'header-menu' => __('Menu Principal'),
     'footer-menu' => __('Menu Footer'),
 ));
+
