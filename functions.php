@@ -22,3 +22,9 @@ register_nav_menus(array(
     'footer-menu' => __('Menu Footer'),
 ));
 
+
+if (!class_exists('SCF')) {
+    error_log('La classe SCF est introuvable. Assurez-vous que le plugin requis est activé.');
+}
+
+
