@@ -24,6 +24,9 @@
             <!-- Bouton qui ouvre la modale -->
             <button id="myBtn">CONTACT</button>
     </nav>
+    <!-- Menu burger pour la version mobile -->
+
+    
     <!-- charge la modale -->
     <?php get_template_part('templates_part/modal-contact'); ?>
     

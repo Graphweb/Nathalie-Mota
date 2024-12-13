@@ -16,6 +16,13 @@ function theme_enqueue_styles() {
     'flex-width'  => true,
 ));
 
+// Inclure jQuery depuis WordPress (il est déjà intégré par défaut)
+function custom_enqueue_scripts() {
+    wp_enqueue_script('jquery');
+}
+add_action('wp_enqueue_scripts', 'custom_enqueue_scripts');
+
+
 // Enregistrer un menu pour le header et footer
 register_nav_menus(array(
     'header-menu' => __('Menu Principal'),
