@@ -29,6 +29,24 @@ register_nav_menus(array(
     'footer-menu' => __('Menu Footer'),
 ));
 
+// hero avec le script de chargement d’une image aléatoire 
+function get_random_hero_image() {
+    $upload_dir = wp_get_upload_dir(); // Récupère le répertoire des uploads
+    $base_url = $upload_dir['baseurl']; // URL de base du dossier uploads
+
+    // URLs des images
+    $images = array(
+        $base_url . '/2024/12/nathalie-0-scaled.jpeg',
+        $base_url . '/2024/12/nathalie-1-scaled.jpeg',
+        $base_url . '/2024/12/nathalie-9-scaled.jpeg',
+        $base_url . '/2024/12/nathalie-11-scaled.jpeg',
+    );
+
+    // Retourne une image aléatoire
+    return $images[array_rand($images)];
+}
+
+
 
 
 

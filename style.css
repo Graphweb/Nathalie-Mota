@@ -549,6 +549,61 @@ form {
     width: 25px;
 }
 
+/* Hero Banner  */
+.hero-banner {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 962px;
+    
+}
+.hero-content{
+    width: 1000px;
+    height: 142px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Style du menu burger */
 /* #burger-toggle {
     display: none;

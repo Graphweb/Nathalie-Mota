@@ -47,21 +47,3 @@ jQuery(document).ready(function($) {
     });
 });
 
-
-//  Menu burger pour la version mobile 
-document.getElementById('burger-toggle').addEventListener('click', function() {
-    document.getElementById('burger-menu').style.display = 'block';
-});
-
-document.getElementById('close-menu').addEventListener('click', function() {
-    document.getElementById('burger-menu').style.display = 'none';
-});
-
-// Ajouter un événement pour fermer le menu et retourner à la page d'accueil lorsque l'on clique sur un lien
-var links = document.querySelectorAll('.burger-links a');
-links.forEach(function(link) {
-    link.addEventListener('click', function() {
-        window.location.href = '<?php echo home_url(); ?>';  // Redirige vers la page d'accueil
-    });
-});
-
