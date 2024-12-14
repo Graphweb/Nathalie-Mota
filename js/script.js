@@ -1,4 +1,5 @@
-// La modale
+/* ****************** MODAL *********************** */
+
 var modal = document.getElementById('contact-modal');
 
 // Le bouton qui ouvre la fenêtre modale
@@ -24,7 +25,8 @@ window.onclick = function(event) {
     }
 }
 
-//* *************************************** */
+/* **************** POPUP *********************** */
+
 jQuery(document).ready(function($) {
     // Afficher la popup au clic sur le bouton "Contact"
     $('#contact-button').on('click', function() {
@@ -46,4 +48,32 @@ jQuery(document).ready(function($) {
         }
     });
 });
+/* **************** ACTION AJAX *********************** */
+jQuery(document).ready(function($) {
+    $('#load-more-photos').on('click', function() {
+        var button = $(this);
+        var page = button.data('page'); // Récupère la page suivante
+        var data = {
+            action: 'load_more_photos', // L'action AJAX
+            page: page,
+            posts_per_page: 8, // Nombre de photos à charger
+        };
 
+        $.ajax({
+            url: ajaxurl, // URL pour l'appel AJAX (définie automatiquement par WordPress)
+            type: 'GET',
+            data: data,
+            beforeSend: function() {
+                button.text('Chargement...'); // Change le texte du bouton pendant le chargement
+            },
+            success: function(response) {
+                if (response) {
+                    // Ajoute les nouvelles photos à la galerie
+                    $('.photo-gallery').append(response);
+                    button.text('Charger plus'); // Remet le texte du bouton
+                    button.data('page', page + 1); // Met à jour la page pour la prochaine requête
+                }
+            }
+        });
+    });
+});

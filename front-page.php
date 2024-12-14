@@ -1,7 +1,7 @@
 <?php
-get_header(); // Inclure l'en-tête
+get_header(); 
 
-// Ajouter le Hero Banner
+// Ajouter le Hero Banner //
 ?>
 <section class="hero-banner" style="background-image: url('<?php echo get_random_hero_image(); ?>');">
     <div class="hero-content">
@@ -12,36 +12,43 @@ get_header(); // Inclure l'en-tête
 </section>
 
 <?php
-// Boucle pour afficher les photos
+// Boucle pour afficher les photos //
 $args = array(
-    'post_type'      => 'photo',  // Custom Post Type "photo"
-    'posts_per_page' => 8,        // Limiter à 8 photos 
+    'post_type'      => 'photo',
+    'posts_per_page' => 8,
+    'orderby'        => 'date',
+    'order'          => 'DESC',
+    'paged'          => 1,  // Initialisation de la page à 1
 );
 
-// Lancer la requête WP_Query
 $query = new WP_Query($args);
 
 if ($query->have_posts()) :
     echo '<div class="photo-gallery">';
     while ($query->have_posts()) : $query->the_post(); ?>
-        <div class="photo-item">
-            <a href="<?php the_permalink(); ?>"> <!-- Lien vers la photo -->
+        <article class="photo-item">
+            <a href="<?php the_permalink(); ?>" aria-label="<?php the_title_attribute(); ?>">
                 <?php 
                 if (has_post_thumbnail()) {
-                    the_post_thumbnail('medium'); // Affiche l'image mise en avant
+                    the_post_thumbnail('medium', ['class' => 'photo-thumbnail']);
+                } else {
+                    echo '<img src="' . get_stylesheet_directory_uri() . '/images/placeholder.jpg" alt="Image non disponible" class="photo-thumbnail">';
                 }
                 ?>
             </a>
-        </div>
+        </article>
     <?php endwhile;
     echo '</div>';
-    wp_reset_postdata(); // Réinitialiser la requête principale
+    echo '<button id="load-more-photos" data-page="2">Charger plus</button>'; // Le bouton "Charger plus" avec la page suivante
+    wp_reset_postdata();
 else :
-    echo '<p>Aucune photo trouvée.</p>'; 
+    echo '<p>Aucune photo trouvée.</p>';
 endif;
 
-get_footer(); // Inclure le pied de page
+get_footer();
 ?>
+
+
 
 
 

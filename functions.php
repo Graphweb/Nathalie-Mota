@@ -3,12 +3,12 @@ add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
 function theme_enqueue_styles() {
     wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
 
-    //POUR RELIER LE CSS ET JS DU THÈME ENFANT //
+    /* ************ POUR RELIER LE CSS ET JS DU THÈME ENFANT ************* */
     wp_enqueue_style('theme-style', get_stylesheet_directory_uri() . '/style.css', array());
     wp_enqueue_script('theme-script', get_stylesheet_directory_uri() . '/js/script.js', array(), false, true);
 }
 
- // Activer le support du logo personnalisé
+ /* ************ ACTIVER LE SUPPORT DU LOGO PERSONNALISÉ ************** */
  add_theme_support('custom-logo', array(
     'height'      => 22,
     'width'       => 345,
@@ -16,20 +16,20 @@ function theme_enqueue_styles() {
     'flex-width'  => true,
 ));
 
-// Inclure jQuery depuis WordPress (il est déjà intégré par défaut)
+/* **************** INCLURE JQUERY DEPUIS WORDPRESS (il est déjà intégré par défaut) ************* */
 function custom_enqueue_scripts() {
     wp_enqueue_script('jquery');
 }
 add_action('wp_enqueue_scripts', 'custom_enqueue_scripts');
 
 
-// Enregistrer un menu pour le header et footer
+/* ********* ENREGISTRER UN MENU POUR LE HEADER ET FOOTER ********** */
 register_nav_menus(array(
     'header-menu' => __('Menu Principal'),
     'footer-menu' => __('Menu Footer'),
 ));
 
-// hero avec le script de chargement d’une image aléatoire 
+/* ************ HERO AVEC LE SCRIPT DE CHARGEMENT D’UNE IMAGE ALÉATOIRE **************** */
 function get_random_hero_image() {
     $upload_dir = wp_get_upload_dir(); // Récupère le répertoire des uploads
     $base_url = $upload_dir['baseurl']; // URL de base du dossier uploads
@@ -46,7 +46,68 @@ function get_random_hero_image() {
     return $images[array_rand($images)];
 }
 
+/* **************** AJAX *********************** */
+function load_more_photos() {
+    // Vérification de la sécurité avec un nonce
+    if (!isset($_GET['page']) || !isset($_GET['posts_per_page'])) {
+        wp_send_json_error();
+    }
 
+    // Paramètres de la requête AJAX
+    $page = intval($_GET['page']);
+    $posts_per_page = intval($_GET['posts_per_page']);
+
+    // Arguments de la requête WP_Query
+    $args = array(
+        'post_type'      => 'photo',
+        'posts_per_page' => $posts_per_page,
+        'paged'          => $page,
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+    );
+
+    // Nouvelle requête pour charger les photos supplémentaires
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) :
+        while ($query->have_posts()) : $query->the_post();
+            ?>
+            <article class="photo-item">
+                <a href="<?php the_permalink(); ?>" aria-label="<?php the_title_attribute(); ?>">
+                    <?php 
+                    if (has_post_thumbnail()) {
+                        the_post_thumbnail('medium', ['class' => 'photo-thumbnail']);
+                    } else {
+                        echo '<img src="' . get_stylesheet_directory_uri() . '/images/placeholder.jpg" alt="Image non disponible" class="photo-thumbnail">';
+                    }
+                    ?>
+                </a>
+            </article>
+            <?php
+        endwhile;
+    else :
+        echo ''; // Si aucune photo n'est trouvée, renvoyer rien
+    endif;
+
+    wp_reset_postdata(); // Réinitialiser la requête
+
+    die(); // Terminer l'exécution de la requête AJAX
+}
+
+// Enregistrer l'action AJAX
+add_action('wp_ajax_load_more_photos', 'load_more_photos');
+add_action('wp_ajax_nopriv_load_more_photos', 'load_more_photos');
+
+
+/* ************** SCRIPT POUR APPELER AJAX ************* */
+
+function enqueue_load_more_script() {
+    wp_enqueue_script('load-more-photos', get_template_directory_uri() . '/js/load-more-photos.js', array('jquery'), null, true);
+
+    // Localiser le script pour ajouter la variable ajaxurl
+    wp_localize_script('load-more-photos', 'ajaxurl', admin_url('admin-ajax.php'));
+}
+add_action('wp_enqueue_scripts', 'enqueue_load_more_script');
 
 
 
