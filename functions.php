@@ -46,7 +46,7 @@ function get_random_hero_image() {
     return $images[array_rand($images)];
 }
 
-/* **************** AJAX *********************** */
+/* **************** AJAX BOUTON CHARGER PLUS *********************** */
 function load_more_photos() {
     // Vérification de la sécurité avec un nonce
     if (!isset($_GET['page']) || !isset($_GET['posts_per_page'])) {
@@ -102,7 +102,7 @@ add_action('wp_ajax_nopriv_load_more_photos', 'load_more_photos');
 /* ************** SCRIPT POUR APPELER AJAX ************* */
 
 function enqueue_load_more_script() {
-    wp_enqueue_script('load-more-photos', get_template_directory_uri() . '/js/load-more-photos.js', array('jquery'), null, true);
+    wp_enqueue_script('load-more-photos', get_template_directory_uri() . '', array('jquery'), null, true);
 
     // Localiser le script pour ajouter la variable ajaxurl
     wp_localize_script('load-more-photos', 'ajaxurl', admin_url('admin-ajax.php'));
@@ -111,5 +111,69 @@ add_action('wp_enqueue_scripts', 'enqueue_load_more_script');
 
 
 
+/* ****** RÉPONDRE AUX REQUÊTES AJAX DÉCLENCHÉES PAR LES FILTRES ***** */
+
+function filter_photos() {
+    // Récupère les valeurs des filtres envoyées via Ajax
+    $categorie = isset($_GET['categorie']) ? sanitize_text_field($_GET['categorie']) : '';
+    $format = isset($_GET['format']) ? sanitize_text_field($_GET['format']) : '';
+    $ordre = isset($_GET['ordre']) ? sanitize_text_field($_GET['ordre']) : 'DESC';
+
+    // Arguments pour WP_Query
+    $args = [
+        'post_type'      => 'photo', // Type de contenu
+        'posts_per_page' => -1,      // Charger toutes les photos
+        'orderby'        => 'date', // Tri par date
+        'order'          => $ordre, // Ordre ASC ou DESC
+    ];
+
+    // Filtrer par catégorie (taxonomie)
+    if (!empty($categorie)) {
+        $args['tax_query'][] = [
+            'taxonomy' => 'categorie', 
+            'field'    => 'slug',
+            'terms'    => $categorie,
+        ];
+    }
+
+    // Filtrer par format (autre taxonomie)
+    if (!empty($format)) {
+        $args['tax_query'][] = [
+            'taxonomy' => 'format', 
+            'field'    => 'slug',
+            'terms'    => $format,
+        ];
+    }
+
+    // Requête WP_Query
+    $query = new WP_Query($args);
+
+    // Génération du contenu à afficher
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post(); ?>
+            <article class="photo-item">
+                <a href="<?php the_permalink(); ?>" aria-label="<?php the_title_attribute(); ?>">
+                    <?php 
+                    if (has_post_thumbnail()) {
+                        the_post_thumbnail('medium', ['class' => 'photo-thumbnail']);
+                    } else {
+                        echo '<img src="' . get_stylesheet_directory_uri() . '/Images/placeholder.jpg" alt="Image non disponible" class="photo-thumbnail">';
+                    }
+                    ?>
+                </a>
+            </article>
+<?php }
+    } else {
+        echo ''; // Aucun contenu trouvé
+    }
+
+    wp_reset_postdata();
+    wp_die(); // Terminer la requête Ajax
+}
+
+// Actions Ajax pour les utilisateurs connectés et non-connectés
+add_action('wp_ajax_filter_photos', 'filter_photos');
+add_action('wp_ajax_nopriv_filter_photos', 'filter_photos');
 
 
