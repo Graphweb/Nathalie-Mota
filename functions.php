@@ -45,8 +45,9 @@ function get_random_hero_image() {
     // Retourne une image aléatoire
     return $images[array_rand($images)];
 }
+/************************************************************************* */
 
-/* **************** AJAX BOUTON CHARGER PLUS *********************** */
+/* ******************************** AJAX BOUTON CHARGER PLUS ********************************************** */
 function load_more_photos() {
     // Vérification de la sécurité avec un nonce
     if (!isset($_GET['page']) || !isset($_GET['posts_per_page'])) {
@@ -72,17 +73,43 @@ function load_more_photos() {
     if ($query->have_posts()) :
         while ($query->have_posts()) : $query->the_post();
             ?>
+            <!-- ici -->
             <article class="photo-item">
-                <a href="<?php the_permalink(); ?>" aria-label="<?php the_title_attribute(); ?>">
-                    <?php 
+            <div class="photo-wrapper">
+                <?php 
                     if (has_post_thumbnail()) {
-                        the_post_thumbnail('medium', ['class' => 'photo-thumbnail']);
-                    } else {
-                        echo '<img src="' . get_stylesheet_directory_uri() . '/images/placeholder.jpg" alt="Image non disponible" class="photo-thumbnail">';
+                    the_post_thumbnail('large', ['class' => 'photo-thumbnail', 'data-category' => esc_attr($categories[0]->name)]);
+        
+                } else {
+                    echo '<img src="' . get_stylesheet_directory_uri() . '/Images/placeholder.jpg" alt="Image non disponible" class="photo-thumbnail" data-category="' . esc_attr($categories[0]->name) . '">';
+                }
+                ?>
+        <div class="photo-overlay">
+            <div class="photo-info">
+                <h3 class="photo-title"><?php the_title(); ?></h3>
+                <p class="photo-category">
+                    <?php 
+                    $categories = get_the_terms(get_the_ID(), 'categorie');
+                    if ($categories) {
+                        echo esc_html($categories[0]->name); // Affiche la première catégorie
                     }
                     ?>
+                </p>
+            </div>
+            <div class="photo-icons">
+                <!-- Icône pour aller à la page single-photo.php -->
+                <a href="<?php the_permalink(); ?>" class="icon icon-view" aria-label="Voir la page">
+                    <i class="fas fa-eye"></i>
                 </a>
-            </article>
+                <!-- Icône pour ouvrir la lightbox -->
+                <a href="#" class="icon icon-lightbox" data-photo-id="<?php echo get_the_ID(); ?>" aria-label="Voir dans la lightbox">
+                    <i class="fas fa-expand"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</article>
+            <!-- ******** -->
             <?php
         endwhile;
     else :
@@ -98,20 +125,17 @@ function load_more_photos() {
 add_action('wp_ajax_load_more_photos', 'load_more_photos');
 add_action('wp_ajax_nopriv_load_more_photos', 'load_more_photos');
 
-
-/* ************** SCRIPT POUR APPELER AJAX ************* */
-
 function enqueue_load_more_script() {
-    wp_enqueue_script('load-more-photos', get_template_directory_uri() . '', array('jquery'), null, true);
-
+    // Charger le script JavaScript
+    wp_enqueue_script('load-more-photos', get_stylesheet_directory_uri() . '', array('jquery'), null, true);
     // Localiser le script pour ajouter la variable ajaxurl
     wp_localize_script('load-more-photos', 'ajaxurl', admin_url('admin-ajax.php'));
 }
 add_action('wp_enqueue_scripts', 'enqueue_load_more_script');
 
+/*************************************************************************** */
 
-
-/* ****** RÉPONDRE AUX REQUÊTES AJAX DÉCLENCHÉES PAR LES FILTRES ***** */
+/* ********************* RÉPONDRE AUX REQUÊTES AJAX DÉCLENCHÉES PAR LES FILTRES ********************* */
 
 function filter_photos() {
     // Récupère les valeurs des filtres envoyées via Ajax
@@ -152,17 +176,43 @@ function filter_photos() {
     if ($query->have_posts()) {
         while ($query->have_posts()) {
             $query->the_post(); ?>
+            <!-- ici -->
             <article class="photo-item">
-                <a href="<?php the_permalink(); ?>" aria-label="<?php the_title_attribute(); ?>">
-                    <?php 
+            <div class="photo-wrapper">
+                <?php 
                     if (has_post_thumbnail()) {
-                        the_post_thumbnail('medium', ['class' => 'photo-thumbnail']);
-                    } else {
-                        echo '<img src="' . get_stylesheet_directory_uri() . '/Images/placeholder.jpg" alt="Image non disponible" class="photo-thumbnail">';
+                    the_post_thumbnail('large', ['class' => 'photo-thumbnail', 'data-category' => esc_attr($categories[0]->name)]);
+        
+                } else {
+                    echo '<img src="' . get_stylesheet_directory_uri() . '/Images/placeholder.jpg" alt="Image non disponible" class="photo-thumbnail" data-category="' . esc_attr($categories[0]->name) . '">';
+                }
+                ?>
+        <div class="photo-overlay">
+            <div class="photo-info">
+                <h3 class="photo-title"><?php the_title(); ?></h3>
+                <p class="photo-category">
+                    <?php 
+                    $categories = get_the_terms(get_the_ID(), 'categorie');
+                    if ($categories) {
+                        echo esc_html($categories[0]->name); // Affiche la première catégorie
                     }
                     ?>
+                </p>
+            </div>
+            <div class="photo-icons">
+                <!-- Icône pour aller à la page single-photo.php -->
+                <a href="<?php the_permalink(); ?>" class="icon icon-view" aria-label="Voir la page">
+                    <i class="fas fa-eye"></i>
                 </a>
-            </article>
+                <!-- Icône pour ouvrir la lightbox -->
+                <a href="#" class="icon icon-lightbox" data-photo-id="<?php echo get_the_ID(); ?>" aria-label="Voir dans la lightbox">
+                    <i class="fas fa-expand"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</article>
+            <!-- ********* -->
 <?php }
     } else {
         echo ''; // Aucun contenu trouvé
@@ -175,5 +225,16 @@ function filter_photos() {
 // Actions Ajax pour les utilisateurs connectés et non-connectés
 add_action('wp_ajax_filter_photos', 'filter_photos');
 add_action('wp_ajax_nopriv_filter_photos', 'filter_photos');
+
+
+
+ /* ************ POUR RELIER LE CSS ET JS DE LA LIGHTBOX ************* */
+function enqueue_lightbox_scripts() {
+    wp_enqueue_style('lightbox-css', get_stylesheet_directory_uri() . '/css/lightbox.css', array(), '1.0', 'all');
+    wp_enqueue_script('lightbox-js', get_stylesheet_directory_uri() . '/js/lightbox.js', array('jquery'), '1.0', true);
+}
+add_action('wp_enqueue_scripts', 'enqueue_lightbox_scripts');
+
+/**************************************************************** */
 
 

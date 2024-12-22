@@ -66,7 +66,7 @@ nav {
     color: #000000;
     font-weight: 900;
 }
-
+/************************ BOUTON CONTACT MENU ******************/
 #myBtn {
     background: none;
     margin-left: 10px;
@@ -85,7 +85,7 @@ nav {
     font-weight: 900;
 }
 
-/****** FORMULAIRE ******/
+/****** FORMULAIRE DU MODAL CONTACT ******/
 
 label, legend {
     color: #313144;
@@ -259,30 +259,131 @@ footer {
     to {top: 0; opacity: 1}
 }
 
-/*placement image accueil*/
+/**********************************************************/
+/* Placement de la galerie d'images */
 .photo-gallery {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* 2 colonnes */
     gap: 20px; 
     margin: 0 200px;
-    /* margin-top: 90px; */
   }
-  
-.photo-item {
-    text-align: center;
-    
-  }
-  
+/* Style des images */
 .photo-item img {
     width: 564px;
     height: 495px;
     object-fit: cover;
-  }
-  .photo-meta{
+    transition: transform 0.3s ease;
+    z-index: 0;
+}
+/************************** HOVER *************************************/
+/* Conteneur principal de l'image */
+.photo-item {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Image principale */
+.photo-thumbnail {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+/* Overlay masqué par défaut */
+.photo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    transition: opacity 0.3s ease;
+}
+
+/* Titre et catégorie */
+/* Informations titre et catégorie */
+.photo-info {
+    display: flex;
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    color: white;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+    gap: 10px; 
+    flex-direction: row; 
+    justify-content: space-between;  
+    width: 90%; 
+}
+
+.photo-title {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 21px;
+    text-align: left;
+    margin: 0;
+    color: #ffffff !important;
+}
+
+.photo-category {
+    font-family: "Space Mono", monospace;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20.73px;
+    text-align: left;
+    margin: 0;
+    letter-spacing: 0.1em;
+}
+
+/* Icônes */
+.photo-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.icon:hover {
+    scale: 0.8;
+}
+
+/* Position spécifique des icônes */
+.icon-view {
+    position: relative;
+    top: 800%; 
+    left: 50%;
+    width: 50px;
+    height: 30px;
+    transform: translate(-50%, -50%); 
+     background: url('images/Icon_eye.svg') center center / 100% 100%;
+}
+
+.icon-lightbox {
+    position: relative;
+    top: 80%; 
+    left: 170%;
+    width: 50px;
+    height: 30px;
+    background: url('images/Icon_focus.svg') center center / 100% 100%;
+}
+
+/* Afficher l'overlay au hover */
+.photo-item:hover .photo-overlay {
+    opacity: 1;
+}
+
+.photo-meta{
     border-bottom: solid;
     width: 564px;
 }
-
+/*************************************************************************/
 /* POPUP SINGLE-PHOTO */
 
 /* Styles généraux pour les labels */
@@ -370,7 +471,7 @@ form {
 }
 
 /*************************************/
-/* Conteneur principal */
+/* Conteneur principal singgle-page */
 .post {
   display: flex;
   flex-wrap: nowrap;
@@ -381,7 +482,7 @@ form {
   margin-top: 60px;
 }
 
-.post h2 {
+.post h1 {
   margin-top: 500px;
   font-size: 66px;
   margin-bottom: 20px;
@@ -410,7 +511,7 @@ form {
     width: 563px !important;
     height: 844px !important;
 }
-
+/***************************************************************/
 /* CONTACT SINGLE-PHOTO */
 .info{
     display: flex; 
@@ -445,29 +546,129 @@ form {
     transform: scale(1.05);
 }
 
-/* SECTION VOUS AIMERIZE AUSSI  */
+/**************************************************************/
+/* Conteneur des photos vous aimeriez aussi */
 .related-photos-gallery {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 70px;
-   
+    
 }
 
 .related-photo img {
     width: 564px;
     height: 495px;
     object-fit: cover;
-
+    transition: transform 0.3s ease;
+    z-index: 0; 
 }
+
 .related-photos{
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
     margin-bottom: 90px;
     border-top: solid;
     max-width: 1200px;
     margin-left: 160px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.related-photos h3{
+.related-photo {
+    position: relative; 
+    overflow: hidden; 
+}
+/************************** HOVER *************************************/
+/* Overlay masqué par défaut */
+.photo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    transition: opacity 0.3s ease;
+}
+
+/* Titre et catégorie */
+/* Informations titre et catégorie */
+.photo-info2 {
+    display: flex;
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    color: white;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+    gap: 10px; 
+    flex-direction: row; 
+    justify-content: space-between;  
+    width: 90%; 
+}
+
+.photo-title2 {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 21px;
+    text-align: left;
+    margin: 0;
+    color: #ffffff !important;
+}
+
+.photo-category2 {
+    font-family: "Space Mono", monospace;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20.73px;
+    text-align: left;
+    margin: 0;
+    letter-spacing: 0.1em;
+}
+
+/* Icônes */
+.photo-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.icon:hover {
+    scale: 0.8;
+}
+
+/* Position spécifique des icônes */
+.icon1 {
+    position: relative;
+    top: -700%; 
+    left: 50%;
+    width: 50px;
+    height: 30px;
+    transform: translate(-50%, -50%); 
+     background: url('images/Icon_eye.svg') center center / 100% 100%;
+}
+
+.icon2 {
+    position: relative;
+    top: -1400%; 
+    left: 160%;
+    width: 50px;
+    height: 30px;
+    background: url('images/Icon_focus.svg') center center / 100% 100%;
+}
+
+/* Afficher l'overlay au hover */
+.photo-item:hover .photo-overlay {
+    opacity: 1;
+}
+
+.related-photos h2{
     padding-top: 60px;
     padding-bottom: 40px;
     font-family: "Space Mono", monospace;
@@ -475,6 +676,7 @@ form {
     font-weight: 400;
 }
 
+/**************************************************/
 /* PAGINATION SINGLE-PHOTO.PHP  */
 .photo-navigation {
     display: flex; 
@@ -550,7 +752,7 @@ form {
 .next-photo {
     width: 25px;
 }
-
+/******************************************/
 /* Hero Banner  */
 .hero-banner {
     background-size: cover;
@@ -567,7 +769,7 @@ form {
     width: 1000px;
     height: 142px;
 }
-
+/***************************************************************/
 /* Style pour le bouton "Charger plus" */
 #load-more-photos {
     background-color: #D8D8D8; 
@@ -607,7 +809,7 @@ form {
     background-color: #ccc; 
     cursor: not-allowed; 
 }
-
+/****************************************************************/
 /* FILTRES DE TRIE */
 
 #categorie,
@@ -651,6 +853,18 @@ form {
     height: 42px;
 }
 
+.select2-results__option {
+    color: #313144 !important;
+    font-family: "Poppins" !important;
+    font-size: 12px !important;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0.03em;
+    padding: 6px;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
 .select2-container--default .select2-results__option[aria-selected=true] {
     background-color: #E00000 !important;
     color: #ffffff;
@@ -687,6 +901,12 @@ form {
 }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #313144 !important;
+    font-family: "Poppins" !important;
+    font-size: 12px !important;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0.03em;
     color: #444;
     line-height: 15px;
     display: block;
@@ -696,64 +916,30 @@ form {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+/*********************************************************/
 
-/* Style du menu burger */
 
-/* #burger-toggle {
-    display: none;
-    font-size: 30px;
-    background: none;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-}
 
-.burger-menu {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: red; /* Background rouge 
-    z-index: 1000;
-    text-align: center;
-}
 
-.burger-links {
-    list-style-type: none;
-    padding: 0;
-}
 
-.burger-links li {
-    margin: 20px 0;
-}
 
-.burger-links a {
-    color: #fff;
-    font-size: 24px;
-    text-decoration: none;
-}
 
-.close-menu {
-    font-size: 40px;
-    color: #fff;
-    background: none;
-    border: none;
-    cursor: pointer;
-    position: absolute;
-    top: 10px;
-    right: 20px;
-} 
 
+/* Ajustement pour des écrans plus petits */
 @media screen and (max-width: 768px) {
-    /* Afficher le bouton burger en mobile 
+    /* Afficher le bouton burger en mobile */
     #burger-toggle {
         display: block;
     }
 
-    /* Masquer le menu classique 
+    /* Masquer le menu classique */ 
     .menu-links {
         display: none;
     }
+    .photo-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Colonnes plus petites sur mobile */
+    }
 }
+
+
+    

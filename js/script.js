@@ -48,9 +48,12 @@ jQuery(document).ready(function($) {
         }
     });
 });
-/* **************** ACTION AJAX *********************** */
-jQuery(document).ready(function($) {
-    $('#load-more-photos').on('click', function() {
+/* ******************************* ACTION AJAX CHARGER PLUS *********************************************** */
+
+jQuery(document).ready(function ($) {
+
+    // Bouton charger plus
+    $('#load-more-photos').on('click', function () {
         var button = $(this);
         var page = button.data('page'); // Récupère la page suivante
         var data = {
@@ -63,10 +66,10 @@ jQuery(document).ready(function($) {
             url: ajaxurl, // URL pour l'appel AJAX (définie automatiquement par WordPress)
             type: 'GET',
             data: data,
-            beforeSend: function() {
+            beforeSend: function () {
                 button.text('Chargement...'); // Change le texte du bouton pendant le chargement
             },
-            success: function(response) {
+            success: function (response) {
                 if (response) {
                     // Ajoute les nouvelles photos à la galerie
                     $('.photo-gallery').append(response);
@@ -119,7 +122,9 @@ jQuery(document).ready(function ($) {
       fetchPhotos();
     });
   });
+/*********************************************************************** */
 
+              //PARAMETRE SELECT2 //
 
   jQuery(document).ready(function ($) {
     // Initialiser Select2 sur tous les éléments de filtre

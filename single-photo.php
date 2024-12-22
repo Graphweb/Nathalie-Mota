@@ -6,7 +6,7 @@
     
     
     <div class="photo-meta">
-    <h2><?php the_title(); ?></h2>
+    <h1><?php the_title(); ?></h1>
     
 
        <?php 
@@ -55,9 +55,9 @@
             <img src="<?php echo get_stylesheet_directory_uri() . '/images/contact-header.png'; ?>" alt="Mot contact répété en boucle">
             <form>
                 <label for="name">NOM :</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="name" autocomplete="name" required>
                 <label for="email">E-MAIL :</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" autocomplete="email" required>
                 <label for="ref-photo">REF. PHOTO :</label>
                 <input type="text" id="ref-photo" readonly>
                 <label for="message">MESSAGE :</label>
@@ -99,8 +99,9 @@
 </section>
 
 <!-- Section des photos apparentées -->
+<!-- Section des photos apparentées -->
 <section class="related-photos">
-    <h3>VOUS AIMEREZ AUSSI</h3>
+    <h2>VOUS AIMEREZ AUSSI</h2>
     <div class="related-photos-gallery">
         <?php
         // Afficher les photos apparentées
