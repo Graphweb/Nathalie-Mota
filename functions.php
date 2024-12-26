@@ -78,7 +78,7 @@ function load_more_photos() {
             <div class="photo-wrapper">
                 <?php 
                     if (has_post_thumbnail()) {
-                    the_post_thumbnail('large', ['class' => 'photo-thumbnail', 'data-category' => esc_attr($categories[0]->name)]);
+                    the_post_thumbnail('original', ['class' => 'photo-thumbnail', 'data-category' => esc_attr($categories[0]->name)]);
         
                 } else {
                     echo '<img src="' . get_stylesheet_directory_uri() . '/Images/placeholder.jpg" alt="Image non disponible" class="photo-thumbnail" data-category="' . esc_attr($categories[0]->name) . '">';
@@ -181,7 +181,7 @@ function filter_photos() {
             <div class="photo-wrapper">
                 <?php 
                     if (has_post_thumbnail()) {
-                    the_post_thumbnail('large', ['class' => 'photo-thumbnail', 'data-category' => esc_attr($categories[0]->name)]);
+                    the_post_thumbnail('original', ['class' => 'photo-thumbnail', 'data-category' => esc_attr($categories[0]->name)]);
         
                 } else {
                     echo '<img src="' . get_stylesheet_directory_uri() . '/Images/placeholder.jpg" alt="Image non disponible" class="photo-thumbnail" data-category="' . esc_attr($categories[0]->name) . '">';
@@ -236,5 +236,6 @@ function enqueue_lightbox_scripts() {
 add_action('wp_enqueue_scripts', 'enqueue_lightbox_scripts');
 
 /**************************************************************** */
+
 
 

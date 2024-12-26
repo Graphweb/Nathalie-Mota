@@ -37,7 +37,7 @@
     <div class="photo-image">
         <?php 
         if (has_post_thumbnail()) {
-            the_post_thumbnail('large', ['class' => 'photo-display']);
+            the_post_thumbnail('original', ['class' => 'photo-display']);
         } 
         ?>
     </div>

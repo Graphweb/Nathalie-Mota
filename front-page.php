@@ -68,42 +68,48 @@ $query = new WP_Query($args);
 
 if ($query->have_posts()) :
     echo '<div class="photo-gallery">';
-    while ($query->have_posts()) : $query->the_post(); ?>
+    while ($query->have_posts()) : $query->the_post(); 
+        $categories = get_the_terms(get_the_ID(), 'categorie'); // Récupère les catégories
+        ?>
         <article class="photo-item">
             <div class="photo-wrapper">
                 <?php 
-                    if (has_post_thumbnail()) {
-                    the_post_thumbnail('large', ['class' => 'photo-thumbnail', 'data-category' => esc_attr($categories[0]->name)]);
-        
+                if (has_post_thumbnail()) {
+                    // Ajout de `data-category` directement à l'image
+                    the_post_thumbnail('original', [
+                        'class' => 'photo-thumbnail', 
+                        'data-category' => !empty($categories) ? esc_attr($categories[0]->name) : 'Non catégorisé'
+                    ]);
                 } else {
-                    echo '<img src="' . get_stylesheet_directory_uri() . '/Images/placeholder.jpg" alt="Image non disponible" class="photo-thumbnail" data-category="' . esc_attr($categories[0]->name) . '">';
+                    echo '<img src="' . get_stylesheet_directory_uri() . '/Images/placeholder.jpg" alt="Image non disponible" class="photo-thumbnail" data-category="' . (!empty($categories) ? esc_attr($categories[0]->name) : 'Non catégorisé') . '">';
                 }
                 ?>
-        <div class="photo-overlay">
-            <div class="photo-info">
-                <h3 class="photo-title"><?php the_title(); ?></h3>
-                <p class="photo-category">
-                    <?php 
-                    $categories = get_the_terms(get_the_ID(), 'categorie');
-                    if ($categories) {
-                        echo esc_html($categories[0]->name); // Affiche la première catégorie
-                    }
-                    ?>
-                </p>
+                <div class="photo-overlay">
+                    <div class="photo-info">
+                        <h3 class="photo-title"><?php the_title(); ?></h3>
+                        <p class="photo-category">
+                            <?php 
+                            if ($categories) {
+                                echo esc_html($categories[0]->name); // Affiche la première catégorie
+                            } else {
+                                echo 'Non catégorisé';
+                            }
+                            ?>
+                        </p>
+                    </div>
+                    <div class="photo-icons">
+                        <!-- Icône pour aller à la page single-photo.php -->
+                        <a href="<?php the_permalink(); ?>" class="icon icon-view" aria-label="Voir la page">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <!-- Icône pour ouvrir la lightbox -->
+                        <a href="#" class="icon icon-lightbox" data-photo-id="<?php echo get_the_ID(); ?>" aria-label="Voir dans la lightbox">
+                            <i class="fas fa-expand"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="photo-icons">
-                <!-- Icône pour aller à la page single-photo.php -->
-                <a href="<?php the_permalink(); ?>" class="icon icon-view" aria-label="Voir la page">
-                    <i class="fas fa-eye"></i>
-                </a>
-                <!-- Icône pour ouvrir la lightbox -->
-                <a href="#" class="icon icon-lightbox" data-photo-id="<?php echo get_the_ID(); ?>" aria-label="Voir dans la lightbox">
-                    <i class="fas fa-expand"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-</article>
+        </article>
     <?php endwhile;
     echo '</div>';
     echo '<button id="load-more-photos" data-page="2">Charger plus</button>'; // Le bouton "Charger plus" avec la page suivante

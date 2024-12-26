@@ -36,7 +36,6 @@ nav {
     
 }
 
-
 .menu-links {
     display: flex;
     flex-wrap: nowrap;
@@ -362,7 +361,7 @@ footer {
     width: 50px;
     height: 30px;
     transform: translate(-50%, -50%); 
-     background: url('images/Icon_eye.svg') center center / 100% 100%;
+    background: url('images/Icon_eye.svg') center center / 100% 100%;
 }
 
 .icon-lightbox {
@@ -379,10 +378,7 @@ footer {
     opacity: 1;
 }
 
-.photo-meta{
-    border-bottom: solid;
-    width: 564px;
-}
+
 /*************************************************************************/
 /* POPUP SINGLE-PHOTO */
 
@@ -752,6 +748,11 @@ form {
 .next-photo {
     width: 25px;
 }
+
+.photo-meta{
+    border-bottom: solid;
+    width: 564px;
+}
 /******************************************/
 /* Hero Banner  */
 .hero-banner {
@@ -917,6 +918,94 @@ form {
     white-space: nowrap;
 }
 /*********************************************************/
+/* Style du bouton burger */
+.burger-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+}
+
+.burger-line {
+    width: 20px;
+    height: 2px;
+    background-color: #030303;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    transform: translateX(-50%);
+}
+
+/* Transformations pour l'animation vers la croix */
+.burger-menu.active .burger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 7px); /* Ligne du haut */
+}
+
+.burger-menu.active .burger-line:nth-child(2) {
+    opacity: 0; /* Cache la ligne du milieu */
+}
+
+.burger-menu.active .burger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -7px); /* Ligne du bas */
+}
+
+/* Menu mobile (masqué par défaut) */
+.mobile-menu {
+    position: fixed;
+    top: 125px;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #E00000;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    z-index: 9999;
+}
+
+.mobile-menu ul {
+    font-family: "Space Mono", monospace;
+    font-size: 44px;
+    font-weight: 400;
+    text-align: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+}
+
+.mobile-menu li {
+    margin: 20px 0;
+}
+
+.mobile-menu a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+/* Menu actif (visible) */
+.mobile-menu.active {
+    transform: translateX(0);
+}
+
+
+/* Bloquer le scroll */
+body.no-scroll {
+    overflow: hidden;
+}
+/* .burger-menu{
+    display: none;
+} */
 
 
 
@@ -924,20 +1013,163 @@ form {
 
 
 
+@media (min-width: 768px) {
+    .burger-menu {
+        display: none;
+    }
+}
 
 /* Ajustement pour des écrans plus petits */
 @media screen and (max-width: 768px) {
-    /* Afficher le bouton burger en mobile */
-    #burger-toggle {
-        display: block;
+
+   .menu{
+    display: none;
+   }
+    .logo {
+        padding-left: 0;
+    }
+    #myBtn {
+        display: none; 
+    }
+    .burger-menu{
+        margin-left: 480px;
+        display: flex;
+    }
+    .hero-banner {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .hero-content {
+        width: 600px;
+        height: 142px;
     }
 
-    /* Masquer le menu classique */ 
-    .menu-links {
-        display: none;
+    .modal-content{
+        left: 200px;
+        width: 360px;
+       z-index: 99999;
+    }
+
+    .modal-header img {
+        transform: scale(1.5);
+    }
+
+    .modal {
+        z-index: 99999;
+    }
+
+    .wpcf7 form {
+        position: relative;
+        margin-left: 50px;
+        margin-top: 15px;
+    }
+
+    .select-0 {
+        display: block;
+        width: 260px;
+        margin: 80px 0 50px 250px;
+    }
+    .select-1,
+    .select-2,
+    .select-3{
+        margin-bottom: 20px;
+        margin-left: 0;
     }
     .photo-gallery {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Colonnes plus petites sur mobile */
+    }
+    #load-more-photos{
+        margin-left: 250px;
+    }
+    .footer-links{
+        display: block;
+        margin: auto;
+        text-align: center;
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+    .footer-links li{
+        margin-bottom: 15px;
+    }
+    .icon-lightbox{
+        left: 100%;
+    }
+   
+    /* Ajustement page simgle-photo */
+    
+    .post {
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        border-bottom:solid;
+    }
+    
+    .photo-meta {
+        order: 2; /* Place photo-meta en deuxième position */
+        border-bottom: none;
+        width: 364px;
+        margin-left: -200px;
+        margin-bottom: 40px;
+    }
+    
+    .photo-image {
+        order: 1; /* Place photo-image en première position */
+        margin-top: 0; /* Supprimez les marges inutiles */
+    }
+    .photo-navigation {
+        display: none;
+       
+    }
+    .info{
+        flex-direction: column;
+        
+    }
+    .info p {
+        margin-left: 0;
+    }
+    .post h1{
+        margin-top: 0;
+    }
+    .related-photos {
+        margin-left: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .btn-contact {
+        margin-left: 60px;
+    }
+    .related-photos-gallery {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 70px;
+        justify-items: center;
+    }
+    #popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        z-index: 1000;
+    }
+    #popup .popup-content {
+        left: 200px;
+        width: 360px;
+        Height: 580px;
+        margin-left: -400px;
+    }
+    form{
+        margin-left: 45px;
     }
 }
 

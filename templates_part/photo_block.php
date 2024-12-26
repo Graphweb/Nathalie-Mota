@@ -3,14 +3,19 @@
     <a href="<?php the_permalink(); ?>">
         <article class="photo-item">
     <div class="photo-wrapper">
-        <?php 
-        if (has_post_thumbnail()) {
-            the_post_thumbnail('large', ['class' => 'photo-thumbnail', 'data-category' => esc_attr($categories[0]->name)]);
-        
-        } else {
-            echo '<img src="' . get_stylesheet_directory_uri() . '/Images/placeholder.jpg" alt="Image non disponible" class="photo-thumbnail" data-category="' . esc_attr($categories[0]->name) . '">';
-        }
-        ?>
+    <?php 
+    // Récupère les catégories
+    $categories = get_the_terms(get_the_ID(), 'categorie'); // Remplace 'categorie' par le slug de ta taxonomie.
+                if (has_post_thumbnail()) {
+                    // Ajout de `data-category` directement à l'image
+                    the_post_thumbnail('original', [
+                        'class' => 'photo-thumbnail', 
+                        'data-category' => !empty($categories) ? esc_attr($categories[0]->name) : 'Non catégorisé'
+                    ]);
+                } else {
+                    echo '<img src="' . get_stylesheet_directory_uri() . '/Images/placeholder.jpg" alt="Image non disponible" class="photo-thumbnail" data-category="' . (!empty($categories) ? esc_attr($categories[0]->name) : 'Non catégorisé') . '">';
+                }
+                ?>
         <div class="photo-overlay">
             <div class="photo-info2">
                 <h3 class="photo-title2"><?php the_title(); ?></h3>

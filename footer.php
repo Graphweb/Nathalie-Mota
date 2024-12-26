@@ -9,7 +9,11 @@
 <!-- Lightbox HTML -->
 <div id="lightbox-overlay">
   <div class="lightbox-content">
-    <button class="lightbox-prev">Précédente</button>
+    <!-- Bouton précédente -->
+    <button class="lightbox-prev">
+      <span class="arrow"></span>
+      <span class="text">Précédente</span>
+    </button>
     <!-- Image affichée -->
     <img class="lightbox-image" src="" alt="">
     <!-- Informations sur l'image -->
@@ -17,10 +21,15 @@
       <h3 class="lightbox-title"></h3>
       <span class="lightbox-category"></span>
     </div>
-    <button class="lightbox-next">Suivante</button>
+    <!-- Bouton suivante -->
+    <button class="lightbox-next">
+    <span class="text">Suivante</span>
+      <span class="arrow"></span>
+    </button>
   </div>
   <span class="lightbox-close">&times;</span>
 </div>
+
 
 <?php wp_footer(); ?>
 </footer>
