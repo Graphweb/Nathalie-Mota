@@ -6,7 +6,7 @@ var modal = document.getElementById('contact-modal');
 var btn = document.getElementById("myBtn");
 
 // Lien CONTACT pour le menu mobile
-var mobileContactLink = document.getElementById("mobileContactLink");
+var mobileContactLink = document.getElementById("mobileContactLink");//ici
 
 //Récupérez l'élément <span> qui ferme la modale
 var span = document.getElementsByClassName("close")[0];
@@ -16,7 +16,7 @@ btn.onclick = function() {
     modal.style.display = "block";
 }
 
-// Lorsque l'utilisateur clique sur le lien CONTACT (version téléphone)
+// Lorsque l'utilisateur clique sur le lien CONTACT (version téléphone) //ici
 mobileContactLink.onclick = function(event) {
   event.preventDefault(); // Empêche le comportement par défaut du lien
   modal.style.display = "block";

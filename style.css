@@ -67,8 +67,12 @@ nav {
 }
 /************************ BOUTON CONTACT MENU ******************/
 #myBtn {
+    all: unset; /* Réinitialise toutes les propriétés par défaut du bouton */
+    border: none;
+    outline: none; 
+    box-shadow: none; 
     background: none;
-    margin-left: 10px;
+    margin-left: 25px;
     text-decoration: none;
     font-family: "Space Mono", monospace;
     font-size: 1.125rem;
@@ -918,7 +922,7 @@ form {
     white-space: nowrap;
 }
 /*********************************************************/
-/* Style du bouton burger */
+/* STYLE DU BOUTON BURGER */
 .burger-menu {
     display: flex;
     flex-direction: column;
@@ -958,7 +962,7 @@ form {
 /* Menu mobile (masqué par défaut) */
 .mobile-menu {
     position: fixed;
-    top: 125px;
+    top: 80px;
     right: 0;
     height: 100%;
     width: 100%;
@@ -1003,9 +1007,7 @@ form {
 body.no-scroll {
     overflow: hidden;
 }
-/* .burger-menu{
-    display: none;
-} */
+
 
 
 
@@ -1170,6 +1172,10 @@ body.no-scroll {
     }
     form{
         margin-left: 45px;
+    }
+    .lightbox-next .text,
+    .lightbox-prev .text {
+        display: none;
     }
 }
 

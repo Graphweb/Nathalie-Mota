@@ -98,7 +98,7 @@
     </div>
 </section>
 
-<!-- Section des photos apparentées -->
+
 <!-- Section des photos apparentées -->
 <section class="related-photos">
     <h2>VOUS AIMEREZ AUSSI</h2>
